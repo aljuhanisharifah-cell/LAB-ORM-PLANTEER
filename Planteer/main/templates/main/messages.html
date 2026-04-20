@@ -6,13 +6,13 @@
 
 <div class="messages-container">
 
-{% for msg in messages %}
-<div class="message-card">
-    <h3>{{ msg.first_name }} {{ msg.last_name }}</h3>
-    <p class="email">{{ msg.email }}</p>
-    <p class="text">{{ msg.message }}</p>
-</div>
-{% endfor %}
+    {% for m in messages %}
+        <div class="message-card">
+            <h3>{{ m.first_name}} {{ m.last_name}}</h3>
+            <p class="email">{{ m.email }}</p>
+            <p class="text">{{ m.message }}</p>
+        </div>
+    {% endfor %}
 
 </div>
 
