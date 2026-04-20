@@ -1,0 +1,49 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="page-title">Search Plants 🔍</h1>
+
+<form method="GET" class="search-form">
+
+    <input type="text" name="q" placeholder="Search plant...">
+
+    <select name="category">
+        <option value="">All Categories</option>
+        <option value="Fruit">Fruit</option>
+        <option value="Vegetable">Vegetable</option>
+    </select>
+
+    <select name="edible">
+        <option value="">All</option>
+        <option value="yes">Edible</option>
+    </select>
+
+    <button type="submit">Search</button>
+
+</form>
+
+<div class="plants-grid">
+
+    {% for plant in plants %}
+    <div class="plant-card">
+
+        {% if plant.image %}
+            <img src="{{ plant.image.url }}">
+        {% else %}
+            <img src="{% static 'plants/default.jpg' %}">
+        {% endif %}
+
+        <h3>{{ plant.name }}</h3>
+
+        <a href="{% url 'plant_detail' plant.id %}">View Details</a>
+
+    </div>
+    {% empty %}
+        <p style="text-align:center;">No results found 😢</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

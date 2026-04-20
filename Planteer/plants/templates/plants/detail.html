@@ -1,0 +1,83 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="detail-container">
+
+    <div class="detail-image">
+        {% if plant.image %}
+            <img src="{{ plant.image.url }}">
+        {% else %}
+            <img src="{% static 'plants/default.jpg' %}">
+        {% endif %}
+    </div>
+
+    <div class="detail-info">
+        <h1>{{ plant.name }}</h1>
+
+        <p>{{ plant.description }}</p>
+
+        <p><strong>Category:</strong> {{ plant.category }}</p>
+
+     
+        <div class="actions">
+
+            <a href="{% url 'update_plant' plant.id %}" class="btn edit">
+                Edit
+            </a>
+
+            <form method="POST" action="{% url 'delete_plant' plant.id %}">
+                {% csrf_token %}
+                <button class="btn delete">Delete</button>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+<hr>
+
+<h2>Related Plants</h2>
+<hr>
+
+<h3>Add Comment</h3>
+
+<form method="POST">
+    {% csrf_token %}
+    <textarea name="comment" placeholder="Write comment..."></textarea>
+    <button>Add</button>
+</form>
+
+<hr>
+
+<h3>Comments</h3>
+
+{% for c in plant.comments.all %}
+    <p>{{ c.text }}</p>
+{% empty %}
+    <p>No comments yet</p>
+{% endfor %}
+
+<div class="plants-grid">
+
+    {% for p in related %}
+    <div class="plant-card">
+
+        {% if p.image %}
+            <img src="{{ p.image.url }}">
+        {% else %}
+            <img src="{% static 'plants/default.jpg' %}">
+        {% endif %}
+
+        <h4>{{ p.name }}</h4>
+
+        <a href="{% url 'plant_detail' p.id %}">View</a>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

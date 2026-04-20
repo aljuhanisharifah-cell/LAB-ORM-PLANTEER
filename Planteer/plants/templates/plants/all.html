@@ -1,0 +1,63 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<h1 class="page-title">All Plants</h1>
+
+
+<form method="GET" class="search-form">
+
+    <input type="text" name="q" placeholder="Search plant...">
+
+    <select name="category">
+        <option value="">All Categories</option>
+        <option value="Fruit">Fruit</option>
+        <option value="Vegetable">Vegetable</option>
+    </select>
+
+    <select name="edible">
+        <option value="">All</option>
+        <option value="yes">Edible</option>
+    </select>
+
+    <button type="submit">Search</button>
+
+</form>
+
+
+<div class="plants-grid">
+
+    {% for plant in plants %}
+    <div class="plant-card">
+
+        {% if plant.image %}
+            <img src="{{ plant.image.url }}" alt="">
+        {% else %}
+            <img src="{% static 'plants/default.jpg' %}" alt="">
+        {% endif %}
+
+        <h3>{{ plant.name }}</h3>
+
+        <a href="{% url 'plant_detail' plant.id %}">View Details</a>
+
+    </div>
+    {% endfor %}
+
+</div>
+
+<div class="pagination">
+
+    {% if plants.has_previous %}
+        <a href="?page={{ plants.previous_page_number }}">Previous</a>
+    {% endif %}
+
+    <span>Page {{ plants.number }} of {{ plants.paginator.num_pages }}</span>
+
+    {% if plants.has_next %}
+        <a href="?page={{ plants.next_page_number }}">Next</a>
+    {% endif %}
+
+</div>
+
+{% endblock %}

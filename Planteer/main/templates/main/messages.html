@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+<h1 class="page-title">Messages from Users</h1>
+
+<div class="messages-container">
+
+{% for msg in messages %}
+<div class="message-card">
+    <h3>{{ msg.first_name }} {{ msg.last_name }}</h3>
+    <p class="email">{{ msg.email }}</p>
+    <p class="text">{{ msg.message }}</p>
+</div>
+{% endfor %}
+
+</div>
+
+{% endblock %}

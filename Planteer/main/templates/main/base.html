@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Planteer</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/style.css' %}">
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">🌿 Planteer</div>
+
+    <div class="nav-links">
+        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+        <a href="/plants/all/" class="{% if 'plants/all' in request.path %}active{% endif %}">All Plants</a>
+        <a href="/plants/new/" class="{% if 'plants/new' in request.path %}active{% endif %}">Add Plant</a>
+        <a href="/plants/search/">Search</a>
+        <a href="/contact/">Contact</a>
+        <a href="/contact/messages/">Messages</a>
+    </div>
+</nav>
+
+
+<main>
+    {% block content %}
+    {% endblock %}
+</main>
+
+<footer class="footer">
+    <p>© 2026 Planteer 🌿 | All rights reserved</p>
+</footer>
+
+</body>
+</html>
