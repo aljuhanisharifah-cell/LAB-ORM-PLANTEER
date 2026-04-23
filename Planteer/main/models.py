@@ -9,3 +9,12 @@ class Contact(models.Model):
 
     def __str__(self):
         return self.first_name
+class Message(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def _str_(self):
+        return self.name
+        

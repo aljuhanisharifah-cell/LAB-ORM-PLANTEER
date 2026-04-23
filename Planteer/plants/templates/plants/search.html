@@ -3,7 +3,7 @@
 
 {% block content %}
 
-<h1 class="page-title">Search Plants 🔍</h1>
+<h1 class="page-title">Search Plants </h1>
 
 <form method="GET" class="search-form">
 
@@ -19,7 +19,29 @@
 
     <select name="edible">
         <option value="">All</option>
-        <option value="yes">Edible</option>
+        <option value="yes" {% if request.GET.edible == "yes" %}selected{% endif %}>Edible</option>
+        <option value="no" {% if request.GET.edible == "no" %}selected{% endif %}>Not Edible</option>
+    </select>
+
+    <select name="country">
+        <option value="">All Countries</option>
+        {% for c in countries %}
+            <option value="{{ c.id }}"
+                {% if request.GET.country == c.id|stringformat:"s" %}selected{% endif %}>
+                {{ c.name }}
+            </option>
+        {% endfor %}
+    </select>
+
+ 
+    <select name="publisher">
+        <option value="">All Publishers</option>
+        {% for p in publishers %}
+            <option value="{{ p.id }}"
+                {% if request.GET.publisher == p.id|stringformat:"s" %}selected{% endif %}>
+                {{ p.name }}
+            </option>
+        {% endfor %}
     </select>
 
     <button type="submit">Search</button>
@@ -29,19 +51,7 @@
 <div class="plants-grid">
 
     {% for plant in plants %}
-    <div class="plant-card">
-
-        {% if plant.image %}
-            <img src="{{ plant.image.url }}">
-        {% else %}
-            <img src="{% static 'plants/default.jpg' %}">
-        {% endif %}
-
-        <h3>{{ plant.name }}</h3>
-
-        <a href="{% url 'plant_detail' plant.id %}">View Details</a>
-
-    </div>
+        {% include 'plants/plant_card.html' %}
     {% empty %}
         <p style="text-align:center;">No results found 😢</p>
     {% endfor %}

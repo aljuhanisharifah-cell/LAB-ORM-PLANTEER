@@ -4,6 +4,7 @@
     <title>Planteer</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'main/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 
 <body>
@@ -16,8 +17,10 @@
         <a href="/plants/all/" class="{% if 'plants/all' in request.path %}active{% endif %}">All Plants</a>
         <a href="/plants/new/" class="{% if 'plants/new' in request.path %}active{% endif %}">Add Plant</a>
         <a href="/plants/search/">Search</a>
-        <a href="/contact/">Contact</a>
-        <a href="/contact/messages/">Messages</a>
+        <a href="{% url 'publishers_list' %}">Publishers</a>
+        <a href="{% url 'contact' %}">Contact</a>
+        <a href="{% url 'contact_messages' %}">Messages</a>
+
     </div>
 </nav>
 
@@ -25,40 +28,51 @@
     {% block content %}
     {% endblock %}
 </main>
-
 <footer class="footer">
+    <div class="footer-inner">
 
-    <div class="footer-inner">  
-
-
-        <div class="footer-section right">
-            <h4>Quick Links</h4>
-            <a href="/">Home</a>
-            <a href="/plants/all/">All Plants</a>
-            <a href="/plants/search/">Search</a>
-            <a href="/contact/">Contact</a>
+       
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'all_plants' %}">All Plants</a>
+            <a href="{% url 'search_plants' %}">Search</a>
+            <a href="{% url 'publishers_list' %}">Publishers</a>
+            <a href="{% url 'contact_messages' %}">Messages</a>
         </div>
 
-   
-        <div class="footer-section center">
+      
+        <div class="footer-section">
             <h3>Planteer 🌱</h3>
-            <p>Discover the beauty of nature</p>
+            <p>
+                Discover plants from around the world, explore their origins,
+                and learn more about nature in a simple and beautiful way.
+            </p>
         </div>
 
-   
-        <div class="footer-section left">
-            <h4>Contact</h4>
-            <p>Email: support@planteer.com</p>
-            <p>Saudi Arabia 🇸🇦</p>
+       
+        <div class="footer-section center">
+    <h3>Stay Connected 🌿</h3>
+    <p>Follow us and stay updated with the latest plants and discoveries.</p>
+
+    <div class="socials">
+        <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+    
+        <a href="#"><i class="fab fa-linkedin"></i> LinkedIn</a>
+    </div>
+</div>
+
+        <div class="footer-section">
+            <h3>Contact</h3>
+            <p>✉️:support@planteer.com</p>
+            <p>📍:Saudi Arabia </p>
         </div>
 
     </div>
 
     <div class="footer-bottom">
-        <p>© 2026 Planteer 🌱</p>
+        © 2026 Planteer 🌱 
     </div>
-
 </footer>
-
 </body>
 </html>
