@@ -1,18 +1,20 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Plant, Comment, Country, Publisher
 from django.core.paginator import Paginator
-
+from django.contrib.auth.decorators import login_required
 
 def add_plant(request):
+    if not request.user.is_superuser:
+        return redirect("home")
+
     countries = Country.objects.all()
-    publishers = Publisher.objects.all() 
+    publishers = Publisher.objects.all()
 
     if request.method == "POST":
-
         name = request.POST.get('name')
         description = request.POST.get('description')
 
-  
+     
         if not name or len(name) < 2:
             return render(request, 'plants/add.html', {
                 'error': 'Name must be at least 2 characters',
@@ -28,7 +30,7 @@ def add_plant(request):
             })
 
         publisher_id = request.POST.get("publisher")
-        publisher_obj = Publisher.objects.get(id=publisher_id)
+        publisher_obj = get_object_or_404(Publisher, id=publisher_id)
 
         plant = Plant.objects.create(
             name=name,
@@ -82,7 +84,7 @@ def all_plants(request):
 def plant_detail(request, plant_id):
     plant = get_object_or_404(Plant, id=plant_id)
 
-    comments = plant.comments.all()
+    comments = plant.comments.all().order_by('-created_at')
     related = Plant.objects.filter(category=plant.category).exclude(id=plant.id)
 
     return render(request, 'plants/detail.html', {
@@ -92,7 +94,11 @@ def plant_detail(request, plant_id):
     })
 
 
+
 def update_plant(request, plant_id):
+    if not request.user.is_superuser:
+        return redirect("home")
+
     plant = get_object_or_404(Plant, id=plant_id)
 
     if request.method == "POST":
@@ -110,7 +116,11 @@ def update_plant(request, plant_id):
     return render(request, 'plants/update.html', {'plant': plant})
 
 
+
 def delete_plant(request, plant_id):
+    if not request.user.is_superuser:
+        return redirect("home")
+
     plant = get_object_or_404(Plant, id=plant_id)
 
     if request.method == "POST":
@@ -118,6 +128,7 @@ def delete_plant(request, plant_id):
         return redirect('all_plants')
 
     return render(request, 'plants/delete.html', {'plant': plant})
+
 
 
 def search_plants(request):
@@ -128,7 +139,11 @@ def search_plants(request):
     query = request.GET.get('q')
 
     if query:
-        plants = plants.filter(name_icontains=query) | plants.filter(description_icontains=query)
+        plants = (
+            plants.filter(name__icontains=query) |
+            plants.filter(description__icontains=query) |
+            plants.filter(category__icontains=query)
+        )
 
     category = request.GET.get('category')
     if category:
@@ -154,22 +169,22 @@ def search_plants(request):
         'publishers': publishers
     })
 
-
+@login_required
 def add_comment(request, plant_id):
     plant = get_object_or_404(Plant, id=plant_id)
 
     if request.method == "POST":
-        name = request.POST.get('name')
         text = request.POST.get('comment')
 
-        if name and text:
+        if text and len(text) >= 3:
             Comment.objects.create(
                 plant=plant,
-                name=name,
+                user=request.user,
                 text=text
             )
 
     return redirect('plant_detail', plant_id=plant.id)
+
 
 
 def plants_by_country(request, country_id):

@@ -11,17 +11,44 @@
 
 <nav class="navbar">
     <div class="logo">🌿 Planteer</div>
+<div class="nav-links">
 
-    <div class="nav-links">
-        <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
-        <a href="/plants/all/" class="{% if 'plants/all' in request.path %}active{% endif %}">All Plants</a>
-        <a href="/plants/new/" class="{% if 'plants/new' in request.path %}active{% endif %}">Add Plant</a>
-        <a href="/plants/search/">Search</a>
-        <a href="{% url 'publishers_list' %}">Publishers</a>
-        <a href="{% url 'contact' %}">Contact</a>
-        <a href="{% url 'contact_messages' %}">Messages</a>
+    <a href="/" class="{% if request.path == '/' %}active{% endif %}">Home</a>
+    <a href="/plants/all/">All Plants</a>
+    <a href="/plants/new/">Add Plant</a>
+    <a href="/plants/search/">Search</a>
+    <a href="{% url 'publishers_list' %}">Publishers</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    <a href="{% url 'contact_messages' %}">Messages</a>
 
-    </div>
+    {% if request.user.is_authenticated %}
+
+        <span class="user-name">
+             {{ request.user.username }}
+        </span>
+
+        <form action="{% url 'logout' %}" method="POST" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="nav-btn logout">
+                <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+        </form>
+
+    {% else %}
+
+        <a href="{% url 'login' %}" class="nav-btn login">
+            Login
+        </a>
+
+        <a href="{% url 'register' %}" class="nav-btn register">
+            Register
+        </a>
+
+    {% endif %}
+
+</div>
+
+</div>
 </nav>
 
 <main class="main-content">

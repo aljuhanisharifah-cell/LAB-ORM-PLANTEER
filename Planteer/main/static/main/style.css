@@ -199,7 +199,7 @@ main {
 }
 
 .nav-links a:hover {
-    color: #aaa;
+    color: white;
 }
 
 
@@ -665,6 +665,120 @@ main {
 .publisher-description {
     color: #666;
     line-height: 1.6;
+}
+
+.nav-btn {
+    padding: 6px 14px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 14px;
+    margin-left: 10px;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+
+.nav-btn.login {
+    background: transparent;
+    border: 1px solid #00ff88;
+    color: #00ff88;
+}
+
+.nav-btn.login:hover {
+    background: #00ff88;
+    color: black;
+}
+
+
+.nav-btn.register {
+    background: #00ff88;
+    color: black;
+}
+
+.nav-btn.register:hover {
+    background: #00cc6a;
+}
+
+
+.nav-btn.logout {
+    background: #ff4d4d;
+    color: white;
+}
+
+.nav-btn.logout:hover {
+    background: #cc0000;
+    transform: scale(1.05);
+}
+
+.user-name {
+    margin-left: 15px;
+    color: #ccc;
+    font-size: 14px;
+}
+.auth-box {
+    max-width: 400px;
+    margin: 60px auto;
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+.auth-box h2 {
+    margin-bottom: 20px;
+}
+
+.auth-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.auth-btn {
+    width: 100%;
+    padding: 12px;
+    background: black;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.auth-btn:hover {
+    background: #333;
+}
+
+.auth-switch {
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.auth-switch a {
+    color: #00aa66;
+    text-decoration: none;
+}
+
+.auth-form {
+    max-width: 420px;
+    margin: 50px auto;
+    padding: 25px;
+}
+
+.auth-form input {
+    width: 100%;
+    margin-bottom: 12px;
+}
+
+
+.auth-form .btn {
+    width: 100%;
+    margin-top: 10px;
 }
 
 @media (max-width: 768px) {
